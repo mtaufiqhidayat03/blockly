@@ -1,0 +1,118 @@
+<script src="jquery-3.4.1.min.js"></script>
+<script src="blockly_compressed.js"></script>
+<script src="blocks_compressed.js"></script>
+<script src="javascript_compressed.js"></script>
+<script src="msg/js/en.js"></script>
+<script src="customblocks.js"></script>
+<style>
+	body {
+		background-color: #fff;
+		font-family: sans-serif;
+	}
+
+	h1 {
+		font-weight: normal;
+		font-size: 140%;
+	}
+	#keterangan {
+		position: absolute;
+		left: 760px;
+		top: 10px;
+		font-size: 150%;
+		font-weight: 800;
+	}
+	#red {
+		height: 150px;
+		width: 150px;
+		border-radius: 50%;
+		border: solid 1px black;
+		position: absolute;
+		left: 760px;
+		top: 110px;
+		text-align: center;
+		line-height: 150px;
+		font-weight: 800;
+	}
+	#yellow{
+		height: 150px;
+		width: 150px;
+		border-radius: 50%;
+		border: solid 1px black;
+		position: absolute;
+		left: 920px;
+		top: 110px;
+		text-align: center;
+		line-height: 150px;
+		font-weight: 800;
+	}
+	#green{
+		height: 150px;
+		width: 150px;
+		border-radius: 50%;
+		border: solid 1px black;
+		position: absolute;
+		left: 1080px;
+		top: 110px;
+		text-align: center;
+		line-height: 150px;
+		font-weight: 800;
+	}
+	#jalankan{
+		position: absolute;
+		left: 760px;
+		top: 300px;
+	}
+</style>
+<div id="blocklyDiv" style="height: 480px; width: 700px;">
+</div>
+<xml id="toolbox" style="display: none">
+	<category name="Lampu">
+		<block type="lightswitch">
+			<field name="lightcolor">red</field>
+			<field name="switch">on</field>
+		</block>
+		<block type="lightswitch">
+				<field name="lightcolor">yellow</field>
+				<field name="switch">on</field>
+		</block>
+		<block type="lightswitch">
+				<field name="lightcolor">green</field>
+				<field name="switch">on</field>
+		</block>
+		<block type="lightswitch">
+				<field name="lightcolor">all</field>
+				<field name="switch">on</field>
+		</block>
+	</category>
+</xml>
+<div id="keterangan">Lampu Lalu Lintas<br/>Bagaimana cara menyalakan lampu merah dan kuning</div>
+<div id="red">merah</div>
+<div id="yellow">kuning</div>
+<div id="green">hijau</div>
+<p>
+<button onclick="runCode()" id="jalankan">Jalankan Perintah</button>
+</p>
+<script>
+	var workspace = Blockly.inject('blocklyDiv', {
+		toolbox: document.getElementById('toolbox')
+	});
+
+	function runCode() {
+		window.LoopTrap = 1000;
+		Blockly.JavaScript.INFINITE_LOOP_TRAP =
+			'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+		var code = Blockly.JavaScript.workspaceToCode(workspace);
+		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+		try {
+			$.when(eval(code)).then(function() {
+			console.log(code);
+			var check = "$('#red').css('background-color', 'red');$('#yellow').css('background-color', 'yellow');";	
+			console.log(check);	
+			if (code === check) {
+			alert ("Selamat anda mendapatkan payung cantik");
+			}});							
+		} catch (e) {
+			alert(e);
+		} 
+	}
+</script>

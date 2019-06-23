@@ -1,0 +1,145 @@
+<script src="jquery-3.4.1.min.js"></script>
+<script src="blockly_compressed.js"></script>
+<script src="blocks_compressed.js"></script>
+<script src="javascript_compressed.js"></script>
+<script src="msg/js/en.js"></script>
+<script src="customblocks2.js"></script>
+<style>
+	body {
+		background-color: #fff;
+		font-family: sans-serif;
+	}
+
+	h1 {
+		font-weight: normal;
+		font-size: 140%;
+	}
+	#keterangan {
+		position: absolute;
+		left: 760px;
+		top: 10px;
+		font-size: 150%;
+		font-weight: 800;
+	}
+	#red {
+		height: 150px;
+		width: 150px;
+		border-radius: 50%;
+		border: solid 1px black;
+		position: absolute;
+		left: 760px;
+		top: 110px;
+		text-align: center;
+		line-height: 150px;
+		font-weight: 800;
+	}
+	#yellow{
+		height: 150px;
+		width: 150px;
+		border-radius: 50%;
+		border: solid 1px black;
+		position: absolute;
+		left: 920px;
+		top: 110px;
+		text-align: center;
+		line-height: 150px;
+		font-weight: 800;
+	}
+	#green{
+		height: 150px;
+		width: 150px;
+		border-radius: 50%;
+		border: solid 1px black;
+		position: absolute;
+		left: 1080px;
+		top: 110px;
+		text-align: center;
+		line-height: 150px;
+		font-weight: 800;
+	}
+	#jalankan{
+		position: absolute;
+		left: 760px;
+		top: 300px;
+	}
+</style>
+<style>
+#image {
+	position: absolute;
+	left: 760px;
+	top: 10px;
+	height: 256px;
+	width: 256px;
+	background: 
+	url('./images/ujicoba.png') 0px 0px;
+}
+</style>
+<div id="blocklyDiv" style="height: 480px; width: 700px;">
+</div>
+<xml id="toolbox" style="display: none">
+	<category name="Berjalan">
+		<block type="movingswitch">
+			<field name="turndirection">up</field>
+		</block>
+		<block type="movingswitch">
+				<field name="turndirection">down</field>
+		</block>
+		<block type="movingswitch">
+				<field name="turndirection">left</field>
+		</block>
+		<block type="movingswitch">
+				<field name="turndirection">right</field>
+		</block>
+	</category>
+</xml>	
+
+<div id="demo">
+	<img id="image"> </img>
+</div>
+<p>
+<button onclick="runCode()" id="jalankan">Jalankan Perintah</button>
+</p>
+<script>
+var tID; //we will use this variable to clear the setInterval()
+function stopAnimate() {
+clearInterval(tID);
+} //end of stopAnimate()
+function animateScript() {
+var    position = 256; //start position for the image slicer
+const  interval = 100; //100 ms of interval for the setInterval()
+const  diff = 256;     //diff as a variable for position offset
+tID = setInterval ( () => {
+document.getElementById("image").style.backgroundPosition = 
+`-${position}px 0px`; 
+//we use the ES6 template literal to insert the variable "position"
+if (position < 1536)
+{ position = position + diff;}
+//we increment the position by 256 each time
+else
+{ position = 256; }
+//reset the position to 256px, once position exceeds 1536px
+}
+, interval ); //end of setInterval
+} //end of animateScript()
+$( document ).ready(function() {
+	animateScript();
+});
+	var workspace = Blockly.inject('blocklyDiv', {
+		toolbox: document.getElementById('toolbox')
+	});
+
+	function runCode() {
+		window.LoopTrap = 1000;
+		Blockly.JavaScript.INFINITE_LOOP_TRAP =
+			'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+		var code = Blockly.JavaScript.workspaceToCode(workspace);
+		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+		try {	
+			console.log(code);	
+			eval(code);
+			
+		} catch (e) {
+			alert(e);
+		} 
+	}
+</script>
