@@ -134,12 +134,14 @@ $( document ).ready(function() {
 			'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
 		var code = Blockly.JavaScript.workspaceToCode(workspace);
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+		var ks = code.split("\n");	
+		$.each(ks, function(k){	
 		try {	
-			console.log(code);	
-			eval(code);
-			
+			eval(ks[k]);  
+			console.log(ks[k]);	
 		} catch (e) {
 			alert(e);
 		} 
+		});
 	}
 </script>

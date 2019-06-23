@@ -33,5 +33,6 @@ Blockly.JavaScript['movingswitch'] = function(block) {
 		var turn = parseInt(parseInt(right)+100 +'px');
 		var code = "document.getElementById('image').style.left="+turn+";"
 	}
+	code += "\n";
 	return code;
 };
