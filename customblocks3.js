@@ -18,8 +18,7 @@ Blockly.Blocks['turn_north'] = {
 	} else {
 		turn = turn;
 	}
-	var code = "document.getElementById('image').style.top="+turn+";"
-	code += "\n";
+	var code = "print(\"document.getElementById('image').style.top="+turn+";\")\n";
 	return code;
   };
 
@@ -43,8 +42,7 @@ Blockly.Blocks['turn_north'] = {
 	} else {
 		turn = 490;
 	}
-	var code = "document.getElementById('image').style.top="+turn+";"
-	code += "\n";
+	var code = "print(\"document.getElementById('image').style.top="+turn+";\")\n";
 	return code;
   };
 
